@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic List Rendering</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+
+function App() {
+  // State to hold the color input value
+  const [color, setColor] = React.useState('');
+  // State to determine if the color is valid
+  const [isValid, setIsValid] = React.useState(true);
+
+  // Function to handle input changes
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setColor(value);
+    // Check if the value is a valid HEX color code
+    setIsValid(/^#[0-9A-F]{6}$/i.test(value));
+  };
+
+  return (
+    <div>
+      <h1>Color Previewer</h1>
+      <input 
+        type="text" 
+        value={color} 
+        onChange={handleChange} 
+        placeholder="Enter HEX color code"
+      />
+      {!isValid && <p style={{ color: 'red' }}>Invalid HEX color code!</p>}
+      <div 
+        style={{
+          width: '100px', 
+          height: '100px', 
+          backgroundColor: isValid ? color : 'transparent', 
+          border: '1px solid black', 
+          marginTop: '10px'
+        }}
+      ></div>
+    </div>
+  );
+}
+
+// Mounting the component
+const reactRoot = ReactDOM.createRoot(document.getElementById('root'));
+reactRoot.render(<App />);
+
+
+
+
+  </script>
+</body>
+</html>
